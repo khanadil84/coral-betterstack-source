@@ -1,0 +1,234 @@
+name: betterstack
+version: 0.1.0
+dsl_version: 3
+backend: http
+
+base_url: https://uptime.betterstack.com
+
+inputs:
+  BETTERSTACK_API_TOKEN:
+    kind: secret
+    hint: Better Stack API Token
+
+auth:
+  type: HeaderAuth
+  headers:
+    - name: Authorization
+      from: template
+      template: Bearer {{input.BETTERSTACK_API_TOKEN}}
+
+test_queries:
+  - SELECT * FROM betterstack.monitors LIMIT 1
+  - SELECT * FROM betterstack.status_pages LIMIT 1
+  - SELECT * FROM betterstack.incidents LIMIT 1
+
+tables:
+
+  # =========================
+  # MONITORS
+  # =========================
+  - name: monitors
+    description: Better Stack uptime monitors
+
+    request:
+      method: GET
+      path: /api/v2/monitors
+
+    response:
+      rows_path:
+        - data
+
+    columns:
+      - name: id
+        type: Utf8
+
+      - name: type
+        type: Utf8
+
+      - name: attributes__url
+        type: Utf8
+
+      - name: attributes__pronounceable_name
+        type: Utf8
+
+      - name: attributes__monitor_type
+        type: Utf8
+
+      - name: attributes__monitor_group_id
+        type: Utf8
+
+      - name: attributes__last_checked_at
+        type: Utf8
+
+      - name: attributes__status
+        type: Utf8
+
+      - name: attributes__team_name
+        type: Utf8
+
+      - name: attributes__required_keyword
+        type: Utf8
+
+      - name: attributes__verify_ssl
+        type: Boolean
+
+      - name: attributes__check_frequency
+        type: Int64
+
+      - name: attributes__call
+        type: Boolean
+
+      - name: attributes__sms
+        type: Boolean
+
+      - name: attributes__email
+        type: Boolean
+
+      - name: attributes__push
+        type: Boolean
+
+      - name: attributes__http_method
+        type: Utf8
+
+      - name: attributes__request_timeout
+        type: Int64
+
+      - name: attributes__recovery_period
+        type: Int64
+
+      - name: attributes__created_at
+        type: Utf8
+
+      - name: attributes__updated_at
+        type: Utf8
+
+      - name: attributes__ssl_expiration
+        type: Int64
+
+      - name: attributes__domain_expiration
+        type: Int64
+
+      - name: attributes__port
+        type: Utf8
+
+      - name: attributes__confirmation_period
+        type: Int64
+
+
+  # =========================
+  # STATUS PAGES
+  # =========================
+  - name: status_pages
+    description: Better Stack status pages
+
+    request:
+      method: GET
+      path: /api/v2/status-pages
+
+    response:
+      rows_path:
+        - data
+
+    columns:
+      - name: id
+        type: Utf8
+
+      - name: type
+        type: Utf8
+
+      - name: attributes__company_name
+        type: Utf8
+
+      - name: attributes__company_url
+        type: Utf8
+
+      - name: attributes__timezone
+        type: Utf8
+
+      - name: attributes__subdomain
+        type: Utf8
+
+      - name: attributes__custom_domain
+        type: Utf8
+
+      - name: attributes__aggregate_state
+        type: Utf8
+
+      - name: attributes__design
+        type: Utf8
+
+      - name: attributes__theme
+        type: Utf8
+
+      - name: attributes__layout
+        type: Utf8
+
+      - name: attributes__subscribable
+        type: Boolean
+
+      - name: attributes__password_enabled
+        type: Boolean
+
+      - name: attributes__history
+        type: Int64
+
+      - name: attributes__announcement
+        type: Utf8
+
+      - name: attributes__created_at
+        type: Utf8
+
+      - name: attributes__updated_at
+        type: Utf8
+
+
+  # =========================
+  # INCIDENTS
+  # =========================
+  - name: incidents
+    description: Better Stack incidents
+
+    request:
+      method: GET
+      path: /api/v2/incidents
+
+    response:
+      rows_path:
+        - data
+
+    columns:
+      - name: id
+        type: Utf8
+
+      - name: type
+        type: Utf8
+
+      - name: attributes__name
+        type: Utf8
+
+      - name: attributes__summary
+        type: Utf8
+
+      - name: attributes__status
+        type: Utf8
+
+      - name: attributes__impact
+        type: Utf8
+
+      - name: attributes__started_at
+        type: Utf8
+
+      - name: attributes__resolved_at
+        type: Utf8
+
+      - name: attributes__duration
+        type: Int64
+
+      - name: attributes__monitor_id
+        type: Utf8
+
+      - name: attributes__created_at
+        type: Utf8
+
+      - name: attributes__updated_at
+        type: Utf8
