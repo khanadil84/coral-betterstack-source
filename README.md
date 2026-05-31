@@ -1,2 +1,2 @@
 # coral-betterstack-source
-Better Stack observability and uptime monitoring source for Coral SQL.
+Better Stack uptime monitoring, incidents, and status pages source for Coral SQL.
